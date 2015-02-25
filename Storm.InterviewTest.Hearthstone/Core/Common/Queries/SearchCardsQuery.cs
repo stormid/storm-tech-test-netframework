@@ -14,11 +14,12 @@ namespace Storm.InterviewTest.Hearthstone.Core.Common.Queries
 		public SearchCardsQuery(string q)
 		{
 			_q = q ?? string.Empty;
+		    _q = _q.ToLowerInvariant();
 		}
 
 		protected override IEnumerable<ICard> ExecuteLinq(IQueryable<ICard> queryOver)
 		{
-			return queryOver.Where(x => x.Name.Contains(_q) || x.Type.ToString() == _q || x.PlayerClass == _q);
+			return queryOver.Where(x => x.Name.ToLowerInvariant().Contains(_q) || x.Type.ToString().ToLowerInvariant() == _q || (x.PlayerClass != null && x.PlayerClass.ToLowerInvariant() == _q));
 		}
 	}
 }
