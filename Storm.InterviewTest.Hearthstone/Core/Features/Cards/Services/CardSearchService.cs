@@ -21,9 +21,9 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Services
 			return Mapper.Map<ICard, CardModel>(card);
 		}
 
-		public IEnumerable<CardModel> Search(string searchTerm)
+		public IEnumerable<CardModel> Search(string searchTerm, string playerClass = null)
 		{
-			var cards = _cardCache.Query(new SearchCardsQuery(searchTerm));
+			var cards = _cardCache.Query(new SearchCardsQuery(searchTerm, playerClass));
 			return Mapper.Map<IEnumerable<ICard>, IEnumerable<CardModel>>(cards);
 		}
 
