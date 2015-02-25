@@ -1,0 +1,21 @@
+﻿@using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Domain
+@model RarityTypeOptions
+
+@switch (Model)
+{
+    case RarityTypeOptions.Free:
+        <strong style="color: silver;"><abbr title="Free Card">Free</abbr></strong>
+        break;
+    case RarityTypeOptions.Common:
+        <strong style="color: slategray;"><abbr title="Common Card">Common</abbr></strong>
+        break;
+    case RarityTypeOptions.Rare:
+        <strong style="color: blue;"><abbr title="Rare Card">Rare</abbr></strong>
+        break;
+    case RarityTypeOptions.Epic:
+        <strong style="color: blueviolet;"><abbr title="Epic Card">Epic</abbr></strong>
+        break;
+    case RarityTypeOptions.Legendary:
+        <strong style="color: coral;"><abbr title="Ohhhh shiny, shiny!">Legendary</abbr></strong>
+        break;
+}
