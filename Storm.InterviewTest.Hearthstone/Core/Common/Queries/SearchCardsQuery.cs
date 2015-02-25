@@ -27,11 +27,15 @@ namespace Storm.InterviewTest.Hearthstone.Core.Common.Queries
 		                                    x.Type.ToString().ToLowerInvariant() == _q ||
 		                                    (x.PlayerClass != null && x.PlayerClass.ToLowerInvariant() == _q));
 
+            // Hardcoded inline if check for the term "neutral" as this is actually represented as a null PlayerClass
+            // Ideally, Neutral cards would have a PlayerClass of Neutral for consistency
 		    if (!_playerClass.IsNullOrWhiteSpace())
 		    {
-
 		        return _playerClass == "neutral" ? results.Where(x => x.PlayerClass == null) : results.Where(x => x.PlayerClass != null && x.PlayerClass.ToLowerInvariant() == _playerClass);
 		    }
+
+            // Filter out hero cards
+		    results = results.Where(x => !x.Id.StartsWith("HERO"));
 
 		    return results;
 		}

@@ -42,6 +42,11 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Base
 			return Builder<WeaponCard>.CreateNew().WithConstructor(() => new WeaponCard(id)).Build();
 		}
 
+	    protected ICard CreateRandomHeroCardWithId(string id)
+	    {
+	        return Builder<HeroCard>.CreateNew().WithConstructor(() => new HeroCard(id)).Build();
+	    }
+
 		protected override void SharedContext()
 		{
 			_cards = Cards();
