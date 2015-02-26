@@ -19,17 +19,6 @@
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="list-inline">
-                    @foreach (var card in Model.Cards)
-                    {
-                        <li class="list-group-item">
-                            @{ Html.RenderPartial("_card", card); }
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
+       @Html.Partial("_Cards", Model.Cards)
     </div>
 </div>
