@@ -162,6 +162,10 @@
     <Compile Include="Core\Features\Cards\IHearthstoneCardParser.cs" />
     <Compile Include="Core\Features\Cards\IHearthstoneCardCacheFactory.cs" />
     <Compile Include="Core\Features\Cards\Services\LocalJsonFeedHearthstoneCardCacheFactory.cs" />
+    <Compile Include="Core\Features\DeckBuilder\DeckModel.cs" />
+    <Compile Include="Core\Features\DeckBuilder\IDeckBuilderService.cs" />
+    <Compile Include="Core\Features\DeckBuilder\Domain\Deck.cs" />
+    <Compile Include="Core\Features\DeckBuilder\Services\DeckBuilderService.cs" />
     <Compile Include="Core\Features\Media\IMediaService.cs" />
     <Compile Include="Core\Features\Media\Services\MediaService.cs" />
     <Compile Include="Global.asax.cs">
