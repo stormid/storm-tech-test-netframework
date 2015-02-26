@@ -218,6 +218,7 @@
     <Content Include="Views\Shared\DisplayTemplates\WeaponModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SpellModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\RarityTypeOptions.cshtml" />
+    <Content Include="Views\Shared\_Cards.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Media\" />
