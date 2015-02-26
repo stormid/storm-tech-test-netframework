@@ -22,3 +22,28 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Pagination */
+ul.pages {
+    list-style-type: none;
+    text-align: center;
+}
+
+ul.pages li {
+    display: inline;
+    margin: 2px;
+}
+
+ul.pages li a {
+    display: inline-block;
+    padding: 0px 5px;
+    border: 1px solid #aaa;
+    background: #ccc;
+}
+
+ul.pages li a.active {
+    background: #fff;
+    font-weight: bold;
+}
+
+
