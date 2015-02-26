@@ -88,6 +88,9 @@
     <Compile Include="Queries\WhenSearchingHearthstoneCardsWithPlayerClass.cs" />
     <Compile Include="Queries\WhenSearchingHearthstoneCardsWithEmptyPlayerClass.cs" />
     <Compile Include="Queries\WhenSearchingHearthstoneCardsWithSpecificCaseInsensitiveQueryTerm.cs" />
+    <Compile Include="Services\MediaServiceContext.cs" />
+    <Compile Include="Services\WhenAccessingAnInvalidCard.cs" />
+    <Compile Include="Services\WhenAccessingAValidCard.cs" />
     <Compile Include="Specification\ContextSpecification.cs" />
     <Compile Include="Specification\MethodThatThrows.cs" />
     <Compile Include="Specification\SpecificationExtensions.cs" />
