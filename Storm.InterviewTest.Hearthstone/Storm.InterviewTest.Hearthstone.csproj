@@ -162,7 +162,7 @@
     <Compile Include="Core\Features\Cards\IHearthstoneCardParser.cs" />
     <Compile Include="Core\Features\Cards\IHearthstoneCardCacheFactory.cs" />
     <Compile Include="Core\Features\Cards\Services\LocalJsonFeedHearthstoneCardCacheFactory.cs" />
-    <Compile Include="Core\Features\DeckBuilder\DeckModel.cs" />
+    <Compile Include="Core\Features\DeckBuilder\Models\DeckModel.cs" />
     <Compile Include="Core\Features\DeckBuilder\IDeckBuilderService.cs" />
     <Compile Include="Core\Features\DeckBuilder\Domain\Deck.cs" />
     <Compile Include="Core\Features\DeckBuilder\Services\DeckBuilderService.cs" />
@@ -172,6 +172,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CardsSearchViewModel.cs" />
+    <Compile Include="Models\DeckBuilderCreateViewModel.cs" />
+    <Compile Include="Models\DeckBuilderBrowseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +225,7 @@
     <Content Include="Views\Shared\DisplayTemplates\SpellModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\RarityTypeOptions.cshtml" />
     <Content Include="Views\Shared\_Cards.cshtml" />
+    <Content Include="Views\MyDecks\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Media\" />

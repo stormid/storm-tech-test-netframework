@@ -9,6 +9,7 @@ using Storm.InterviewTest.Hearthstone.Core.Features.Cards;
 using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Domain;
 using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Models;
 using Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Domain;
+using Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Models;
 
 namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Services
 {
@@ -48,7 +49,7 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Services
             return BuildDeckModel(deck);
         }
 
-        public DeckModel CreateDeck(string name, string heroId)
+        public DeckModel CreateDeck(string name, string heroId, IEnumerable<string> cardIds)
         {
             var deck = new Deck()
             {
@@ -59,23 +60,17 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Services
             deck.HeroCardId = heroId;
             deck.PlayerClass = heroCard.PlayerClass;
 
-            _decks.Add(deck);
-            SaveDecks();
+            foreach (var cardId in cardIds)
+            {
+                deck.AddCard(_cardCache.GetById<ICard>(cardId));
+            }
 
-            return BuildDeckModel(deck);
-        }
-
-        public DeckModel AddCardToDeck(string name, string id)
-        {
-            var deck = _decks.FirstOrDefault(x => x.Name == name);
-            if (deck == null)
+            if (deck.CardIds.Count() != 30)
             {
                 return null;
             }
 
-            var card = _cardCache.GetById<ICard>(id);
-            deck.AddCard(card);
-
+            _decks.Add(deck);
             SaveDecks();
 
             return BuildDeckModel(deck);
@@ -92,7 +87,7 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Services
             var deckModel = new DeckModel
             {
                 Name = deck.Name,
-                HeroModel = Mapper.Map<HeroModel>(_cardCache.GetById<ICard>(deck.HeroCardId))
+                HeroModel = Mapper.Map<CardModel>(_cardCache.GetById<ICard>(deck.HeroCardId))
             };
 
             var cards = deck.CardIds.Select(cardId => Mapper.Map<CardModel>(_cardCache.GetById<ICard>(cardId))).ToList();
