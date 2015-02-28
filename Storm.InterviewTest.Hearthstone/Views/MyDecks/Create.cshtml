@@ -1,0 +1,23 @@
+﻿@model Storm.InterviewTest.Hearthstone.Models.DeckBuilderCreateViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Deck Builder</h1>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Create A New Deck</div>
+    <div class="panel-body">
+        @Html.ValidationSummary()
+
+        @Html.Partial("_Card", Model.HeroCard)
+
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("Id", Model.HeroCard.Id)
+            <input type="text" name="Name" class="form-control" placeholder="Deck Name"/>
+            <input type="submit" value="Create Deck"/>
+        }
+    </div>
+</div>
