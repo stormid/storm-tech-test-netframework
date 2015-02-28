@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Channels;
@@ -23,9 +24,10 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Services
 		{
 			_cardCache = cardCache;
             _decks = new List<Deck>();
+
 		    _decksFilePath = HttpContext.Current.Server.MapPath("~/App_Data/decks.json");
 
-		    if (File.Exists(_decksFilePath))
+		    if (!File.Exists(_decksFilePath))
 		    {
 		        SaveDecks();
 		    }
@@ -49,31 +51,56 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Services
             return BuildDeckModel(deck);
         }
 
-        public DeckModel CreateDeck(string name, string heroId, IEnumerable<string> cardIds)
+        public DeckModel CreateDeck(string name, string heroId)
         {
-            var deck = new Deck()
-            {
-                Name = name
-            };
-
             var heroCard = _cardCache.GetById<ICard>(heroId);
-            deck.HeroCardId = heroId;
-            deck.PlayerClass = heroCard.PlayerClass;
 
-            foreach (var cardId in cardIds)
-            {
-                deck.AddCard(_cardCache.GetById<ICard>(cardId));
-            }
-
-            if (deck.CardIds.Count() != 30)
+            if (name == null || heroCard == null)
             {
                 return null;
             }
+
+            var deck = new Deck
+            {
+                Name = name,
+                HeroCardId = heroId,
+                PlayerClass = heroCard.PlayerClass
+            };
 
             _decks.Add(deck);
             SaveDecks();
 
             return BuildDeckModel(deck);
+        }
+
+        public CardModel AddCardToDeck(string name, string id)
+        {
+            var deck = _decks.FirstOrDefault(x => x.Name == name);
+            if (deck == null)
+            {
+                return null;
+            }
+
+            var card = _cardCache.GetById<ICard>(id);
+            deck.AddCard(card);
+
+            SaveDecks();
+
+            return Mapper.Map<CardModel>(card);
+        }
+
+        public void RemoveCardFromDeck(string name, string id)
+        {
+            var deck = _decks.FirstOrDefault(x => x.Name == name);
+            if (deck == null)
+            {
+                return;
+            }
+
+            var card = _cardCache.GetById<ICard>(id);
+            deck.RemoveCard(card);
+
+            SaveDecks();
         }
 
         private void SaveDecks()

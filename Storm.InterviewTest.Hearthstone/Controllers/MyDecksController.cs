@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using Microsoft.SqlServer.Server;
 using Storm.InterviewTest.Hearthstone.Core.Features.Cards;
 using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Domain;
 using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Models;
@@ -35,35 +37,93 @@ namespace Storm.InterviewTest.Hearthstone.Controllers
 	    public ActionResult Create(string id)
 	    {
 	        var hero = CardSearchService.FindById(id);
-	        if (hero.Type != CardTypeOptions.Hero.ToString())
+
+            if (hero == null || hero.Type != CardTypeOptions.Hero.ToString())
 	        {
 	            return RedirectToAction("Index");
 	        }
 
-	        var availableCards = new List<CardModel>();
-            availableCards.AddRange(CardSearchService.Search("", hero.PlayerClassText));
-            availableCards.AddRange(CardSearchService.Search(""));
-
 	        var viewModel = new DeckBuilderCreateViewModel
 	        {
-	            HeroCard = hero,
-	            AvailableCards = availableCards
+	            HeroCard = hero
 	        };
+
+	        if (TempData.ContainsKey("Error"))
+	        {
+	            ModelState.AddModelError("", TempData["Error"].ToString());
+	        }
 
 	        return View(viewModel);
 	    }
 
 	    [HttpPost]
-	    public ActionResult Create(string id, string name, string[] cardIds)
+	    public ActionResult Create(string id, string name)
 	    {
-	        var deck = DeckBuilderService.CreateDeck(name, id, cardIds);
+	        var deck = DeckBuilderService.CreateDeck(name, id);
 	        if (deck == null)
 	        {
-	            ModelState.AddModelError("", "Deck could not be created, please try again.");
+	            TempData["Error"] = "Deck could not be created, please try again.";
                 return RedirectToAction("Create", new { id });
 	        }
 
             return RedirectToAction("ViewDeck", new { name = deck.Name });
+	    }
+
+	    [HttpPost]
+	    public JsonResult AddCardToDeck(string name, string cardId)
+	    {
+	        var deck = DeckBuilderService.GetDeck(name);
+            if (deck == null)
+            {
+                return Json(new DeckBuilderAddCardJsonResult
+                {
+                    Success = false,
+                    ErrorMessage = "Could not find deck"
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+	        CardModel cardModel;
+	        try
+            {
+	        
+                cardModel = DeckBuilderService.AddCardToDeck(name, cardId);
+	        }
+	        catch (InvalidOperationException e)
+	        {
+                return Json(new DeckBuilderAddCardJsonResult
+                {
+                    Success = false,
+                    ErrorMessage = e.Message
+                }, JsonRequestBehavior.AllowGet);
+	        }
+
+	        return Json(new DeckBuilderAddCardJsonResult
+	        {
+	            Success = true,
+                CardId = cardModel.Id,
+                CardName = cardModel.Name
+	        }, JsonRequestBehavior.AllowGet);
+	    }
+
+	    [HttpPost]
+	    public JsonResult RemoveCardFromDeck(string name, string cardId)
+	    {
+            var deck = DeckBuilderService.GetDeck(name);
+            if (deck == null)
+            {
+                return Json(new DeckBuilderAddCardJsonResult
+                {
+                    Success = false,
+                    ErrorMessage = "Could not find deck"
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            DeckBuilderService.RemoveCardFromDeck(name, cardId);
+
+            return Json(new DeckBuilderAddCardJsonResult
+            {
+                Success = true
+            }, JsonRequestBehavior.AllowGet);
 	    }
 
 	    public ActionResult ViewDeck(string name)
@@ -74,7 +134,18 @@ namespace Storm.InterviewTest.Hearthstone.Controllers
 	            return RedirectToAction("Index");
 	        }
 
-            return View();
+            var availableCards = new List<CardModel>();
+            availableCards.AddRange(CardSearchService.Search("", deck.HeroModel.PlayerClassText));
+            availableCards.AddRange(CardSearchService.Search("", "Neutral"));
+	        availableCards.RemoveAll(x => x.Type == "Hero");
+
+	        var viewModel = new DeckBuilderEditViewModel
+	        {
+	            Deck = deck,
+	            AvailableCards = availableCards
+	        };
+
+            return View(viewModel);
 	    }
 	}
 }

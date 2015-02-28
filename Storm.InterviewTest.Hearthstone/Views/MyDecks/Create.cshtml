@@ -9,21 +9,15 @@
 <div class="panel panel-default">
     <div class="panel-heading">Create A New Deck</div>
     <div class="panel-body">
-    @using (Html.BeginForm())
-    {
-        @Html.Hidden(Model.HeroCard.Id)
-        <input type="text" class="form-control" placeholder="Deck Name"/>
+        @Html.ValidationSummary()
 
-        <ul class="list-inline">
-        @foreach (var card in Model.AvailableCards)
+        @Html.Partial("_Card", Model.HeroCard)
+
+        @using (Html.BeginForm())
         {
-            <li>
-                @Html.Partial("_Card", card)
-            </li>
+            @Html.Hidden("Id", Model.HeroCard.Id)
+            <input type="text" name="Name" class="form-control" placeholder="Deck Name"/>
+            <input type="submit" value="Create Deck"/>
         }
-        </ul>
-
-        <input type="submit" value="Create Deck" />
-        }
-</div>
+    </div>
 </div>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Models;
 using Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Models;
 
 namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder
@@ -7,6 +8,8 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder
     {
         IEnumerable<DeckModel> GetAllDecks();
         DeckModel GetDeck(string name);
-        DeckModel CreateDeck(string name, string heroId, IEnumerable<string> cardIds);
+        DeckModel CreateDeck(string name, string heroId);
+        CardModel AddCardToDeck(string name, string id);
+        void RemoveCardFromDeck(string name, string id);
     }
 }

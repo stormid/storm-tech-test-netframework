@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Domain;
 
@@ -23,23 +25,37 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.DeckBuilder.Domain
  
         public void AddCard(ICard card)
         {
-            // Return if we already have 30 cards or;
-            // if the card is a hero card or;
-            // if the card PlayerClass is not neutral or of the same type as our hero card
-            if (cardIds.Count == 30 || 
-                card.Type == CardTypeOptions.Hero ||
-                card.PlayerClass != null && card.PlayerClass != PlayerClass)
+            if (cardIds.Count == 30)
             {
-                return;
+                throw new InvalidOperationException("This deck already has 30 cards, no more cards can be added");
             }
 
-            // Return if we already have the max amount of this specific card
-            if (cardIds.Count(x => x == card.Id) == GetAllowedCount(card.Rarity))
+            if (card.Type == CardTypeOptions.Hero)
             {
-                return;
+                throw new InvalidOperationException("You cannot add a Hero card to a deck");
+            }
+
+            if(card.PlayerClass != null && card.PlayerClass != PlayerClass)
+            {
+                throw new InvalidOperationException(string.Format("You can only add cards of class '{0}' to this deck", PlayerClass));
+            }
+
+            var allowedcount = GetAllowedCount(card.Rarity);
+            if (cardIds.Count(x => x == card.Id) == allowedcount)
+            {
+                throw new InvalidOperationException(string.Format("You can have already added {0} copies of this card which is the maximum for a card of {1} rarity", allowedcount, card.Rarity));
             }
 
             cardIds.Add(card.Id);
+        }
+
+        public void RemoveCard(ICard card)
+        {
+            var cardId = cardIds.FirstOrDefault(x => x == card.Id);
+            if (cardId != null)
+            {
+                cardIds.RemoveAt(cardIds.IndexOf(cardId));
+            }
         }
 
         private int GetAllowedCount(RarityTypeOptions rarity)

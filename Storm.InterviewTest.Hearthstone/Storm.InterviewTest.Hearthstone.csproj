@@ -172,8 +172,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CardsSearchViewModel.cs" />
+    <Compile Include="Models\DeckBuilderAddCardJsonResult.cs" />
     <Compile Include="Models\DeckBuilderCreateViewModel.cs" />
     <Compile Include="Models\DeckBuilderBrowseViewModel.cs" />
+    <Compile Include="Models\DeckBuilderEditViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +203,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\jquery.sticky.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -226,6 +229,7 @@
     <Content Include="Views\Shared\DisplayTemplates\RarityTypeOptions.cshtml" />
     <Content Include="Views\Shared\_Cards.cshtml" />
     <Content Include="Views\MyDecks\Create.cshtml" />
+    <Content Include="Views\MyDecks\ViewDeck.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Media\" />
