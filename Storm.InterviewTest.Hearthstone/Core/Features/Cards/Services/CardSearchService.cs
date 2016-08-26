@@ -26,6 +26,10 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Services
 		public IEnumerable<CardModel> Search(string searchTerm)
 		{
 			var cards = _cardRepository.Query(new SearchCardsQuery(searchTerm));
+		    foreach (var card in cards)
+		    {
+		        var temp = _mapper.Map<ICard, CardModel>(card);
+		    }
 			return _mapper.Map<IEnumerable<ICard>, IEnumerable<CardModel>>(cards);
 		}
 

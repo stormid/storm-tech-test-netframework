@@ -15,6 +15,9 @@ namespace Storm.InterviewTest.Hearthstone.Core.DependencyInjection
             // Register our profiles explicitly
             builder.RegisterType<CardsMappingProfile>().As<Profile>();
 
+            // Also our resolvers
+            builder.RegisterType<HeroResolver>().AsSelf();
+
 
             // based on http://kevsoft.net/2016/02/24/automapper-and-autofac-revisited.html
 
@@ -30,7 +33,6 @@ namespace Storm.InterviewTest.Hearthstone.Core.DependencyInjection
                         x.AddProfile(profile);
                     }
                 });
-                Debug.WriteLine("{0} mappers loaded", config.GetMappers().Count());
                 return config;
             }).SingleInstance()  // We only need one instance
               .AutoActivate()    // Create it on ContainerBuilder.Build()
@@ -42,12 +44,10 @@ namespace Storm.InterviewTest.Hearthstone.Core.DependencyInjection
                 var ctx = context.Resolve<IComponentContext>();
                 var config = ctx.Resolve<MapperConfiguration>();
 
-                Debug.WriteLine("{0} mappers loaded", config.GetMappers().Count());
                 // Create our mapper using our configuration above
                 return config.CreateMapper(t => ctx.Resolve(t));
 
-            }).As<IMapper>()
-              .InstancePerLifetimeScope(); // Bind it to the IMapper interface
+            }).As<IMapper>();  // Bind it to the IMapper interface
 
             base.Load(builder);
         }

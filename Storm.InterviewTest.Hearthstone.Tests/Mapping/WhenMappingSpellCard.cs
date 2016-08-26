@@ -27,7 +27,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Mapping
 
 		protected override void Because()
 		{
-			_result = Mapper.Map<SpellCard, SpellModel>(_card);
+			_result = _mapper.Map<SpellCard, SpellModel>(_card);
 		}
 
 		[Test]

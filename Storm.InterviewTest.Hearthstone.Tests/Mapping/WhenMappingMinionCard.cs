@@ -29,7 +29,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Mapping
 
 		protected override void Because()
 		{
-			_result = Mapper.Map<MinionCard, MinionModel>(_card);
+			_result = _mapper.Map<MinionCard, MinionModel>(_card);
 		}
 
 		[Test]
