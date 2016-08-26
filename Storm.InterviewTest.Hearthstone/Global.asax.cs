@@ -17,6 +17,7 @@ namespace Storm.InterviewTest.Hearthstone
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DependencyInjection.RegisterServices();
 
 			CardCache = CardCacheConfig.BuildCardCache();
 
