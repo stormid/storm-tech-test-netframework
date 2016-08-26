@@ -12,7 +12,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Mapping
 	public abstract class MappingCardsContext : ContextSpecification
 	{
 		protected HeroCard _heroCard;
-		protected Mock<IHearthstoneCardCache> _cache;
+		protected Mock<IHearthstoneCardRepository> _repository;
 
 		protected override void SharedContext()
 		{
@@ -21,10 +21,9 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Mapping
 				Name = "My Hero"
 			};
 
-			_cache = CreateDependency<IHearthstoneCardCache>();
-			_cache.Setup(s => s.Query(It.IsAny<FindHeroCardQuery>())).Returns(_heroCard);
+			_repository = CreateDependency<IHearthstoneCardRepository>();
+			_repository.Setup(s => s.Query(It.IsAny<FindHeroCardQuery>())).Returns(_heroCard);
 
-			AutoMapperProfiles.RegisterProfiles(_cache.Object);
 		}
 	}
 }

@@ -5,7 +5,7 @@ namespace Storm.InterviewTest.Hearthstone
 {
 	public class CardCacheConfig
 	{
-		public static IHearthstoneCardCache BuildCardCache()
+		public static IHearthstoneCardRepository BuildCardCache()
 		{
 			var parser = new HearthstoneCardParser();
 			var factory = new LocalJsonFeedHearthstoneCardCacheFactory(parser);

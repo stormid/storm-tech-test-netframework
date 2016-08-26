@@ -12,7 +12,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
 
 		protected override void Because()
 		{
-			_result = _hearthstoneCardCache.GetById<MinionCard>("M1");
+			_result = _hearthstoneCardRepository.GetById<MinionCard>("M1");
 		}
 
 		[Test]

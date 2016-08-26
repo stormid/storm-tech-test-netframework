@@ -10,6 +10,9 @@ namespace Storm.InterviewTest.Hearthstone
         {
             var builder = new ContainerBuilder();
 
+            // Register our Autofac modules (these are in core/dependencyinjection)
+            builder.RegisterAssemblyModules(typeof (MvcApplication).Assembly);
+
             // Register MVC Controllers
             builder.RegisterControllers(typeof (MvcApplication).Assembly);
 
@@ -18,11 +21,6 @@ namespace Storm.InterviewTest.Hearthstone
 
             // Enable property injection for action filters (although we aren't using them yet)
             builder.RegisterFilterProvider();
-
-            // Explicitly register services we require
-
-
-
 
             // Set container to Autofac
             var container = builder.Build();

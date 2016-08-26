@@ -7,11 +7,11 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Mapping
 {
 	public class CardsMappingProfile : Profile
 	{
-		private readonly IHearthstoneCardCache _hearthstoneCardCache;
+		private readonly IHearthstoneCardRepository _hearthstoneCardRepository;
 
-		public CardsMappingProfile(IHearthstoneCardCache hearthstoneCardCache)
+		public CardsMappingProfile(IHearthstoneCardRepository hearthstoneCardRepository)
 		{
-			_hearthstoneCardCache = hearthstoneCardCache;
+			_hearthstoneCardRepository = hearthstoneCardRepository;
 		}
 
 		protected override void Configure()
@@ -23,7 +23,7 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Mapping
 				.Include<SpellCard, SpellModel>()
 				.Include<HeroCard, HeroModel>()
 				.ForMember(m => m.PlayerClass,
-					opt => opt.ResolveUsing(m => _hearthstoneCardCache.Query(new FindHeroCardQuery(m.PlayerClass))))
+					opt => opt.ResolveUsing(m => _hearthstoneCardRepository.Query(new FindHeroCardQuery(m.PlayerClass))))
 				.ForMember(m => m.PlayerClassText, opt =>
 				{
 					opt.NullSubstitute("Neutral");

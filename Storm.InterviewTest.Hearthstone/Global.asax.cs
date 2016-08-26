@@ -9,7 +9,6 @@ namespace Storm.InterviewTest.Hearthstone
 {
 	public class MvcApplication : HttpApplication
 	{
-		public static IHearthstoneCardCache CardCache { get; private set; }
 
 		protected void Application_Start()
 		{
@@ -19,9 +18,6 @@ namespace Storm.InterviewTest.Hearthstone
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
             DependencyInjection.RegisterServices();
 
-			CardCache = CardCacheConfig.BuildCardCache();
-
-			AutoMapperProfiles.RegisterProfiles(CardCache);
 		}
 	}
 }

@@ -51,11 +51,9 @@
       <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.Net4">
-      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -124,7 +122,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AutoMapperProfiles.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\CardCacheConfig.cs" />
     <Compile Include="App_Start\DependencyInjection.cs" />
@@ -134,6 +131,8 @@
     <Compile Include="Core\Common\Queries\Base\SingleCardLinqQueryObject.cs" />
     <Compile Include="Core\Common\Queries\FindHeroCardQuery.cs" />
     <Compile Include="Core\Common\Queries\FindPlayableHeroCardsQuery.cs" />
+    <Compile Include="Core\DependencyInjection\AutomapperModule.cs" />
+    <Compile Include="Core\DependencyInjection\HearthstoneModule.cs" />
     <Compile Include="Core\Features\Cards\Models\HeroModel.cs" />
     <Compile Include="Core\Features\Cards\Models\MinionModel.cs" />
     <Compile Include="Core\Features\Cards\Models\SpellModel.cs" />
@@ -164,9 +163,9 @@
     <Compile Include="Core\Features\Cards\Domain\SpellCard.cs" />
     <Compile Include="Core\Features\Cards\Domain\WeaponCard.cs" />
     <Compile Include="Core\Common\Queries\Base\CardListQueryObject.cs" />
-    <Compile Include="Core\Features\Cards\Services\HearthstoneCardCache.cs" />
+    <Compile Include="Core\Features\Cards\Services\HearthstoneCardRepository.cs" />
     <Compile Include="Core\Features\Cards\HearthstoneCardsTypeConverter.cs" />
-    <Compile Include="Core\Features\Cards\IHearthstoneCardCache.cs" />
+    <Compile Include="Core\Features\Cards\IHearthstoneCardRepository.cs" />
     <Compile Include="Core\Features\Cards\Services\HearthstoneCardCacheFactory.cs" />
     <Compile Include="Core\Features\Cards\Services\HearthstoneCardParser.cs" />
     <Compile Include="Core\Features\Cards\IHearthstoneCardParser.cs" />
@@ -270,7 +269,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <Import Project="..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets')" />
   <Import Project="..\packages\OctoPack.3.0.41\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.41\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">
     <Error Condition="!Exists('..\packages\OctoPack.3.0.41\tools\OctoPack.targets') And ('$(RunOctoPack)' != '' And $(RunOctoPack))" Text="You are trying to build with OctoPack, but the NuGet targets file that OctoPack depends on is not available on this computer. This is probably because the OctoPack package has not been committed to source control, or NuGet Package Restore is not enabled. Please enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />

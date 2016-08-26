@@ -8,29 +8,31 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Services
 {
 	public class CardSearchService : ICardSearchService
 	{
-		private readonly IHearthstoneCardCache _cardCache;
+		private readonly IHearthstoneCardRepository _cardRepository;
+	    private readonly IMapper _mapper;
 
-		public CardSearchService(IHearthstoneCardCache cardCache)
-		{
-			_cardCache = cardCache;
-		}
+	    public CardSearchService(IHearthstoneCardRepository cardRepository, IMapper mapper)
+	    {
+	        _cardRepository = cardRepository;
+	        _mapper = mapper;
+	    }
 
-		public CardModel FindById(string id)
+	    public CardModel FindById(string id)
 		{
-			var card = _cardCache.GetById<ICard>(id);
-			return Mapper.Map<ICard, CardModel>(card);
+			var card = _cardRepository.GetById<ICard>(id);
+			return _mapper.Map<ICard, CardModel>(card);
 		}
 
 		public IEnumerable<CardModel> Search(string searchTerm)
 		{
-			var cards = _cardCache.Query(new SearchCardsQuery(searchTerm));
-			return Mapper.Map<IEnumerable<ICard>, IEnumerable<CardModel>>(cards);
+			var cards = _cardRepository.Query(new SearchCardsQuery(searchTerm));
+			return _mapper.Map<IEnumerable<ICard>, IEnumerable<CardModel>>(cards);
 		}
 
 		public IEnumerable<CardModel> GetHeroes()
 		{
-			var heroes = _cardCache.Query(new FindPlayableHeroCardsQuery());
-			return Mapper.Map<IEnumerable<ICard>, IEnumerable<CardModel>>(heroes);
+			var heroes = _cardRepository.Query(new FindPlayableHeroCardsQuery());
+			return _mapper.Map<IEnumerable<ICard>, IEnumerable<CardModel>>(heroes);
 		}
 	}
 }
