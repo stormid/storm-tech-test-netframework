@@ -1,0 +1,33 @@
+Existing Design Patterns & Practices
+====================================
+I can see the following design patterns in play within the solution:
+
+Factory Pattern
+  - As used in the HearthstoneCardCacheFactory
+
+Template Pattern
+  - Also used in the HearthstoneCardCacheFactory and in other classes such as the ContextSpecification.
+
+Command Pattern
+  - Used for Query objects (i.e. <Query>.Execute())
+
+What I Would Implement/Change
+=============================
+To begin with I would want to look at refactoring the project architecture. Currently everything lives inside one project (Except for Unit Tests). I would ideally rearchitect this to follow something more scalable such as the Onion Architecture.
+
+For example, I would have the following projects:
+
+Hearthstone.Core.Domain
+  - This would house core domain models such as Card
+
+Hearthstone.Core.Services
+  - This would house service interfaces such as ICardSearchService
+
+Hearthstone.Core.Common
+  - This would house things such as the search query classes
+
+Hearthstone.Infrastructure.Services
+  - This would house the concrete service implementations (hooked up with an IoC container such as Ninject) 
+
+I would make use of Dependency Injection via Ninject to hook up interfaces to concrete implementation and use constructor injection. This would avoid the need to new up concrete services within controllers (Yack!).
+

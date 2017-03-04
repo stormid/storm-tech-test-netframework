@@ -1,31 +1,49 @@
-﻿@model IEnumerable<Storm.InterviewTest.Hearthstone.Core.Features.Cards.Models.CardModel>
+﻿@model Storm.InterviewTest.Hearthstone.Models.DeckBuilderBrowseViewModel
+
 @{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Deck Builder</h1>
-    <p>Coming soon....maybe?</p>
-</div>
+<h1>Deck Builder</h1>
+
 <div class="panel panel-default">
-    <div class="panel-heading">Up for a challenge?</div>
+    <div class="panel-heading">My Decks</div>
     <div class="panel-body">
-        <p>The deck builder is designed to allow users to create custom decks of cards</p>
-        <ul>
-            <li>A deck is created for one of the following heroes:
-                <ul class="list-inline">
-                    @foreach (var hero in Model)
-                    {
-                        <li>@{ Html.RenderPartial("_Card", hero); }</li>
-                    }
-                </ul>
-            </li>
-            <li>A deck can only contain neutral cards a neutral card has a null <code>PlayerClass</code>, or cards with a <code>PlayerClass</code> that matches that chosen hero for the deck.</li>
-            <li>A deck must be given a name, this is supplied by the user</li>
-            <li>A deck must contain exactly <strong>30</strong> cards</li>
-            <li>A deck can only contain cards of type <code>Minion</code>, <code>Spell</code>, <code>Weapon</code></li>
-            <li>A deck can contain to up 2 copies of the same card</li>
-            <li>Any specific card can only exist once per deck if it has a <code>Rarity</code> of <strong style="color: blueviolet">Epic</strong> or <strong style="color: coral">Legendary</strong>.</li>
+        <ul class="list-inline">
+            @foreach (var deck in Model.Decks)
+            {
+                <li>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="@Url.Action("ViewDeck", "MyDecks", new { name = deck.Name})"><img class="img-responsive img-thumbnail" src="@deck.HeroModel.ImageUrl" alt="@deck.HeroModel.Name" title="@deck.HeroModel.Name" /></a>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <b>@deck.Name</b>
+                            <span class="label label-default">@deck.HeroModel.PlayerClassText</span>
+                        </div>
+                    </div>
+                </li>
+            }
         </ul>
+</div>
+    <div class="panel-heading">Create A Deck</div>
+    <div class="panel-body">
+        <p>Choose A Hero to begin building a deck</p>
+        <ul class="list-inline">
+            @foreach (var hero in Model.Heroes)
+            {
+                <li>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="@Url.Action("Create", "MyDecks", new { id = hero.Id })"><img class="img-responsive img-thumbnail" src="@hero.ImageUrl" alt="@hero.Name" title="@hero.Name" /></a>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <span class="label label-default">@hero.PlayerClassText</span>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+
     </div>
 </div>

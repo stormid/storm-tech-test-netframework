@@ -1,0 +1,87 @@
+﻿@model Storm.InterviewTest.Hearthstone.Models.DeckBuilderEditViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+    function bindClicks() {
+        $('.remove-card').off();
+        $('.remove-card').click(function (e) {
+            e.preventDefault();
+            var me = $(this).parent();
+            var rel = $(this).attr('rel');
+
+            $.post('@Url.Action("RemoveCardFromDeck")', { name: '@Model.Deck.Name', cardId: rel }, function (data) {
+                if (data.Success) {
+                    me.remove();
+                    $('#card-count').text(parseInt($('#card-count').text()) - 1);
+                } else {
+                    alert(data.ErrorMessage);
+                }
+            }, 'json');
+        });
+    }
+
+    $(function () {
+        $('#deckcards').sticky({ topSpacing: 50 });
+
+        $('.add-card').click(function (e) {
+            e.preventDefault();
+            var rel = $(this).attr('rel');
+
+            $.post('@Url.Action("AddCardToDeck")', { name: '@Model.Deck.Name', cardId: rel }, function (data) {
+                    if (data.Success) {
+                        $('.card-list').append('<li>' + data.CardName + ' <a href="#" class="remove-card" rel="' + data.CardId + '">X</a></li>');
+                        $('#card-count').text(parseInt($('#card-count').text()) + 1);
+                        bindClicks();
+                    } else {
+                        alert(data.ErrorMessage);
+                    }
+                }, 'json');
+            });
+
+            bindClicks();
+        });
+    </script>
+}
+
+<h1>Deck Builder</h1>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Deck: @Model.Deck.Name</div>
+    <div class="panel-body col-md-9">
+        <h4>Available Cards</h4>
+
+        <ul class="list-inline">
+            @foreach (var card in Model.AvailableCards)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="#" class="add-card" rel="@card.Id"><img class="img-responsive img-thumbnail" src="@card.ImageUrl" alt="@card.Name" title="@card.Name" /></a>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <span class="label label-default">@card.PlayerClassText</span>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+
+    </div>
+    <div class="panel-body col-md-3">
+        <div id="deckcards">
+            <h4>Cards In Deck (<span id="card-count">@Model.Deck.Cards.Count()</span> / 30)</h4>
+            <ul class="card-list">
+                @foreach (var card in Model.Deck.Cards)
+                {
+                    <li>@card.Name <a href="#" class="remove-card" rel="@card.Id">X</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

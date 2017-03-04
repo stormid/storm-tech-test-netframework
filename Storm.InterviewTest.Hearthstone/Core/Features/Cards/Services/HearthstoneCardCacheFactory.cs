@@ -6,7 +6,7 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Services
 {
 	public abstract class HearthstoneCardCacheFactory : IHearthstoneCardCacheFactory
 	{
-		private readonly IHearthstoneCardParser _parser;
+		protected readonly IHearthstoneCardParser _parser;
 
 		protected HearthstoneCardCacheFactory(IHearthstoneCardParser parser)
 		{
@@ -15,10 +15,10 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Services
 
 		public IHearthstoneCardCache Create()
 		{
-			var cards = PopulateCards(_parser);
+			var cards = PopulateCards();
 			return new HearthstoneCardCache(cards.ToList());
 		}
 
-		protected abstract IEnumerable<ICard> PopulateCards(IHearthstoneCardParser parser);
+		protected abstract IEnumerable<ICard> PopulateCards();
 	}
 }

@@ -27,15 +27,25 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Base
 			return minion;
 		}
 
-		protected ICard CreateRandomSpellCardWithId(string id)
+		protected ICard CreateRandomSpellCardWithId(string id, Action<SpellCard> spellAction = null)
 		{
-			return Builder<SpellCard>.CreateNew().WithConstructor(() => new SpellCard(id)).Build();
+			var spell = Builder<SpellCard>.CreateNew().WithConstructor(() => new SpellCard(id)).Build();
+		    if (spellAction != null)
+		    {
+		        spellAction.Invoke(spell);
+		    }
+		    return spell;
 		}
 
 		protected ICard CreateRandomWeaponCardWithId(string id)
 		{
 			return Builder<WeaponCard>.CreateNew().WithConstructor(() => new WeaponCard(id)).Build();
 		}
+
+	    protected ICard CreateRandomHeroCardWithId(string id)
+	    {
+	        return Builder<HeroCard>.CreateNew().WithConstructor(() => new HeroCard(id)).Build();
+	    }
 
 		protected override void SharedContext()
 		{
