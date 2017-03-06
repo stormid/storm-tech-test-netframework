@@ -27,7 +27,8 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
 		[Test]
 		public void ShouldReturnExpectedSearchResults()
 		{
-			_result.Count().ShouldEqual(Cards().Count());
+            // -1 becuase there is one hero card - task 2c
+			_result.Count().ShouldEqual(Cards().Count()-1);
 		}
 	}
 }

@@ -3,66 +3,46 @@ using System.IO;
 using System.Web;
 using Newtonsoft.Json.Linq;
 using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Domain;
+using System.Linq;
 
 namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Services
 {
 	public class LocalJsonFeedHearthstoneCardCacheFactory : HearthstoneCardCacheFactory
 	{
-		public LocalJsonFeedHearthstoneCardCacheFactory(IHearthstoneCardParser parser) : base(parser)
+        private string _cardsSource;
+        private string _cardTypes;
+
+		public LocalJsonFeedHearthstoneCardCacheFactory(IHearthstoneCardParser parser, string cardsSource, string cardTypes) : base(parser)
 		{
+            _cardsSource = cardsSource;
+            _cardTypes = cardTypes;
 		}
 
+        //task 5
 		protected override IEnumerable<ICard> PopulateCards(IHearthstoneCardParser parser)
 		{
-			using (var reader = File.OpenText(HttpContext.Current.Server.MapPath("~/App_Data/cards.json")))
-			{
-				var cardSets = JObject.Parse(reader.ReadToEnd());
-				JToken cards;
-				if (cardSets.TryGetValue("Basic", out cards) && cards.Type == JTokenType.Array)
-				{
-					foreach (var card in cards)
-					{
-						var parsedCard = parser.Parse(card.ToString());
-						if (parsedCard != null)
-						{
-							yield return parsedCard;
-						}
-					}
-				}
-				if (cardSets.TryGetValue("Classic", out cards) && cards.Type == JTokenType.Array)
-				{
-					foreach (var card in cards)
-					{
-						var parsedCard = parser.Parse(card.ToString());
-						if (parsedCard != null)
-						{
-							yield return parsedCard;
-						}
-					}
-				}
-				if (cardSets.TryGetValue("Curse of Naxxramas", out cards) && cards.Type == JTokenType.Array)
-				{
-					foreach (var card in cards)
-					{
-						var parsedCard = parser.Parse(card.ToString());
-						if (parsedCard != null)
-						{
-							yield return parsedCard;
-						}
-					}
-				}
-				if (cardSets.TryGetValue("Goblins vs Gnomes", out cards) && cards.Type == JTokenType.Array)
-				{
-					foreach (var card in cards)
-					{
-						var parsedCard = parser.Parse(card.ToString());
-						if (parsedCard != null)
-						{
-							yield return parsedCard;
-						}
-					}
-				}
-			}
+            var types = _cardTypes.Split(',');
+
+            List<ICard> result = new List<ICard>();
+
+            JObject cardSets;
+
+            using (var reader = File.OpenText(HttpContext.Current.Server.MapPath(_cardsSource)))
+            {
+                cardSets = JObject.Parse(reader.ReadToEnd());           
+            }
+
+            foreach (var child in cardSets)
+            {
+               if (types.Contains(child.Key.ToString()))
+               {
+                  result.AddRange(parser.ParseArray(child.Value.ToString()));
+               }
+            }
+
+            result = result.Where(x => x != null).ToList();		
+
+            return result;
 		}
 	}
 }

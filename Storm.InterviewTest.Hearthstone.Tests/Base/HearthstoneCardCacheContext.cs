@@ -37,6 +37,16 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Base
 			return Builder<WeaponCard>.CreateNew().WithConstructor(() => new WeaponCard(id)).Build();
 		}
 
+        /// <summary>
+        /// Method that randomly creates hero card - task 2c
+        /// </summary>
+        /// <param name="id">card id</param>
+        /// <returns>ICard</returns>
+        protected ICard CreateRandomHerdoCardWithId(string id)
+        {
+            return Builder<HeroCard>.CreateNew().WithConstructor(() => new HeroCard(id)).Build();
+        }
+
 		protected override void SharedContext()
 		{
 			_cards = Cards();
@@ -50,7 +60,8 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Base
 				CreateRandomMinionCardWithId("M1"),
 				CreateRandomMinionCardWithId("M2"),
 				CreateRandomSpellCardWithId("S1"),
-				CreateRandomWeaponCardWithId("W1")
+				CreateRandomWeaponCardWithId("W1"),
+                CreateRandomHerdoCardWithId("H1")   //added one hero card - task 2c             
 			};
 		}
 	}

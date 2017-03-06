@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -124,6 +125,7 @@
     <Compile Include="Core\Common\Queries\Base\SingleCardLinqQueryObject.cs" />
     <Compile Include="Core\Common\Queries\FindHeroCardQuery.cs" />
     <Compile Include="Core\Common\Queries\FindPlayableHeroCardsQuery.cs" />
+    <Compile Include="Core\Features\Cards\IMediaProvider.cs" />
     <Compile Include="Core\Features\Cards\Models\HeroModel.cs" />
     <Compile Include="Core\Features\Cards\Models\MinionModel.cs" />
     <Compile Include="Core\Features\Cards\Models\SpellModel.cs" />
@@ -162,9 +164,11 @@
     <Compile Include="Core\Features\Cards\IHearthstoneCardParser.cs" />
     <Compile Include="Core\Features\Cards\IHearthstoneCardCacheFactory.cs" />
     <Compile Include="Core\Features\Cards\Services\LocalJsonFeedHearthstoneCardCacheFactory.cs" />
+    <Compile Include="Core\Features\Cards\Services\MediaProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CardsVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -214,9 +218,10 @@
     <Content Include="Views\Shared\DisplayTemplates\HeroModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\WeaponModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SpellModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\RarityTypeOptions.cshtml" />
+    <Content Include="Views\Shared\_Cards.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Views\Media\" />
   </ItemGroup>
   <ItemGroup>
