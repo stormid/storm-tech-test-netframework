@@ -1,4 +1,15 @@
-# This is the Storm Candidate Technical Test
+# THIS TEST IS OBSOLETE
+
+This is the old technical test. **Do not do this test!**
+
+Candidates should use the [new .NET Core test](https://github.com/stormid/storm-tech-test-netcore).
+
+The repository has been preserved for history, and the previous README content follows below.
+
+***
+
+
+# ~This is the Storm Candidate Technical Test~
 
 # Build Status
 [![Build status](https://ci.appveyor.com/api/projects/status/lk2wil8wjyxyiepy?svg=true)](https://ci.appveyor.com/project/StormID/storm-tech-test)
