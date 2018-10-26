@@ -13,7 +13,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Base
 	public abstract class HearthstoneCardCacheContext : ContextSpecification
 	{
 		protected IEnumerable<ICard> _cards;
-		protected IHearthstoneCardCache _hearthstoneCardCache;
+		protected IHearthstoneCardRepository _hearthstoneCardRepository;
 
 		protected ICard CreateRandomMinionCardWithId(string id)
 		{
@@ -40,7 +40,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Base
 		protected override void SharedContext()
 		{
 			_cards = Cards();
-			_hearthstoneCardCache = new HearthstoneCardCache(_cards);
+			_hearthstoneCardRepository = new HearthstoneCardRepository(_cards);
 		}
 
 		protected virtual IEnumerable<ICard> Cards()

@@ -13,10 +13,10 @@ namespace Storm.InterviewTest.Hearthstone.Core.Features.Cards.Services
 			_parser = parser;
 		}
 
-		public IHearthstoneCardCache Create()
+		public IHearthstoneCardRepository Create()
 		{
 			var cards = PopulateCards(_parser);
-			return new HearthstoneCardCache(cards.ToList());
+			return new HearthstoneCardRepository(cards.ToList());
 		}
 
 		protected abstract IEnumerable<ICard> PopulateCards(IHearthstoneCardParser parser);

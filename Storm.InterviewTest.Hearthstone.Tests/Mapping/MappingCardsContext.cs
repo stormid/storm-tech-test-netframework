@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using AutoMapper;
+using FizzWare.NBuilder.Dates;
+using Moq;
 using NUnit.Framework;
 using Storm.InterviewTest.Hearthstone.Core.Common.Queries;
 using Storm.InterviewTest.Hearthstone.Core.Features.Cards;
@@ -12,19 +14,38 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Mapping
 	public abstract class MappingCardsContext : ContextSpecification
 	{
 		protected HeroCard _heroCard;
-		protected Mock<IHearthstoneCardCache> _cache;
+		protected Mock<IHearthstoneCardRepository> _repository;
+	    protected IMapper _mapper;
+
 
 		protected override void SharedContext()
 		{
 			_heroCard = new HeroCard("H1")
 			{
-				Name = "My Hero"
+				Name = "My Hero",
+                PlayerClass = null
 			};
 
-			_cache = CreateDependency<IHearthstoneCardCache>();
-			_cache.Setup(s => s.Query(It.IsAny<FindHeroCardQuery>())).Returns(_heroCard);
+ 			_repository = CreateDependency<IHearthstoneCardRepository>();
 
-			AutoMapperProfiles.RegisterProfiles(_cache.Object);
+            // Mock our repo to only return hero card whenever player class is not null
+			_repository.Setup(s => s.Query(It.Is<FindHeroCardQuery>(y => y != null))).Returns(_heroCard);
+
+           _mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<CardsMappingProfile>();
+
+            }).CreateMapper(t =>
+            {
+                // Poor man's dependency injection
+                if(t == typeof(HeroResolver))
+                    return new HeroResolver(_repository.Object);
+
+                return null;
+            });
+
+
+
 		}
 	}
 }

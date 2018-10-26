@@ -6,6 +6,6 @@ namespace Storm.InterviewTest.Hearthstone.Core.Common.Queries.Base
 {
     public abstract class CardListQueryObject<T> where T : ICard
     {
-        public abstract IEnumerable<T> Execute(IHearthstoneCardCache cache);
+        public abstract IEnumerable<T> Execute(IHearthstoneCardRepository repository);
     }
 }

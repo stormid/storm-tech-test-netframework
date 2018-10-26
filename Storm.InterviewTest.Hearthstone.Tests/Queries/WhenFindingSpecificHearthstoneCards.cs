@@ -12,7 +12,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
 		
 		protected override void Because()
 		{
-			_result = _hearthstoneCardCache.GetById<ICard>("S1");
+			_result = _hearthstoneCardRepository.GetById<ICard>("S1");
 		}
 
 		[Test]

@@ -15,7 +15,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
 
 		protected override void Because()
 		{
-			_result = _hearthstoneCardCache.Query(new FindAllCardsQuery());
+			_result = _hearthstoneCardRepository.Query(new FindAllCardsQuery());
 		}
 
 		[Test]

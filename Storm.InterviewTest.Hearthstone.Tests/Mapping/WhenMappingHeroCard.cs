@@ -27,7 +27,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Mapping
 
 		protected override void Because()
 		{
-			_result = Mapper.Map<HeroCard, HeroModel>(_card);
+			_result = _mapper.Map<HeroCard, HeroModel>(_card);
 		}
 
 		[Test]
@@ -35,8 +35,8 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Mapping
 		{
 			_result.Name.ShouldEqual(_card.Name);
 			_result.ImageUrl.ShouldEqual(_card.ImageUrl);
-			_result.PlayerClass.ShouldBeOfType(typeof(HeroModel));
-			_result.PlayerClass.Name.ShouldEqual("My Hero");
+			_result.PlayerClass.ShouldBeNull();
+			_result.PlayerClass.ShouldBeNull();
 			_result.Health.ShouldEqual(_card.Health);
 			_result.Attack.ShouldEqual(_card.Attack);
 		}
