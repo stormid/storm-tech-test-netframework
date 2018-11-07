@@ -20,6 +20,14 @@
             <li>Can you list the design patterns in use within the web application?</li>
             <li>Would you introduce any new patterns/practices or change any of the existing patterns/practices?</li>
         </ul>
+        <p style="color:green;">Design Patterns used:</p>
+        <ul style="color:green">
+            <li>Abstract Factory - cads cache</li>
+            <li>Interpreter - card and cards type converters</li>
+            <li>Composite - card classes</li>
+            <li>TemplateMethod - CardListLinqQueryObject, SearchCardsQuery</li>
+        </ul>
+        <p style="color:green">I would definitely recommend implementing Dependency Injection. It would help to keep all dependencies in one place, avoid useless instances creation and it would make project more testable in terms of unit tests.</p>
         <p>We can discuss these points at the interview</p>
     </div>
 </div>
@@ -33,6 +41,7 @@ I am trying to use the website to build my super mage deck, when i browse the ca
            </pre>
         </p>
         <p>Investigate the bug report and if you discover any issues correct them and also implement any additional supporting tests that ensure that the issue is detected before a release in future.</p>
+        <p style="color:green">Fixed. Search was case sensitive. Added one unit test that will fail without fix.</p>
     </div>
 </div>
 <div class="panel panel-default">
@@ -41,7 +50,8 @@ I am trying to use the website to build my super mage deck, when i browse the ca
         <p>A lot of people are searching for cards by <code>PlayerClass</code>, unfortunately the search box can at times return results that are not just for that <code>PlayerClass</code>.</p>
         <p>We have been tasked with improving the card search so that the user can select a player class from a dropdown list positioned before the search box, this will allow them to filter the cards by the selected <code>PlayerClass</code> with the option of also using the search box to refine the results even further</p>
         <p>The dropdown list should default to an option that searches all <code>PlayerClass</code> types</p>
-        <img src="~/Content/images/search_options.png"/>
+        <img src="~/Content/images/search_options.png"/><br /><br />
+        <p style="color:green">Added filtering by PlayerClass.</p>
     </div>
 </div>
 <div class="panel panel-default">
@@ -49,6 +59,7 @@ I am trying to use the website to build my super mage deck, when i browse the ca
     <div class="panel-body">
         <p>Currently the 9 hero classes are also shown on the card browser, these cards should not be shown within the card browser</p>
         <p>e.g. The <code>Priest</code> hero card called "Anduin Wrynn"</p>
+        <p style="color:green">Fixed. Search no longer include hero cards and /cards page also do not include it. ShouldReturnExpectedSearchResults unit test amended to fit new requiremnt.</p>
     </div>
 </div>
 <div class="panel panel-default">
@@ -63,7 +74,7 @@ I am trying to use the website to build my super mage deck, when i browse the ca
             <li><strong style="color: blueviolet;"><abbr title="Epic Card">Epic</abbr></strong></li>
             <li><strong style="color: coral;"><abbr title="Ohhhh shiny, shiny!">Legendary</abbr></strong></li>
         </ul>
-
+        <p style="color:green">Added Display Template for Rarity.</p>
     </div>
 </div>
 <div class="panel panel-default">
@@ -75,6 +86,8 @@ I am trying to use the website to build my super mage deck, when i browse the ca
             <li>Implement a reusable service class/component for retrieving checking, downloading and returning a path to a media image</li>
             <li>Add unit tests to the solution that verify the success and error conditions of the service class</li>
         </ol>
+        <p style="color:green">Implemented media service.</p>
+        <p style="color:green">Testing requires to create dependency FileManager class and/or dependency Downloader class. Then we can mock it and and we're able to test logic of MadiaProvider.</p>
         <div class="alert alert-info">Hint: Look at the existing services for examples</div>
     </div>
 </div>
@@ -82,18 +95,22 @@ I am trying to use the website to build my super mage deck, when i browse the ca
     <div class="panel-heading">Task 5: Review and refactor the <code>LocalJsonFeedHearthstoneCardCacheFactory</code> service class</div>
     <div class="panel-body">
         <p>Refactor the service class to improve maintainability and reduce cyclomatic complexity</p>
+        <p style="color:green">Refactored. Moved card types and cards source to web.config</p>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">Task 6: Refactor the card browser view</div>
     <div class="panel-body">
         <p>Refactor the card browsing page to use a partial view to show card list, allowing it to be reused on other pages to display any list of cards (i.e. listing the cards within a custom deck)</p>
+        <p style="color:green">Added partial view.</p>
     </div>
 </div>
 <div class="panel panel-default panel-danger">
     <div class="panel-heading">Task 7: Add paging functionality<i class="pull-right glyphicon glyphicon-exclamation-sign"></i></div>
     <div class="panel-body">
         <p>Currently the card browser lists all cards on a single page, add the ability to page through the cards in groups of 25</p>
+        <p style="color:green">This can be done by creating helper or PaginationService class. We would then pass number of items, numer of items per page and current page number. It would return us list of items for specific page.</p>
+        <p style="color:green">We can also implement it as ajax call.</p>
     </div>
     <div class="panel-footer">This is an extra task, dont worry if you dont have time to implement this, it is here if you wish to give it a go and impress us :)</div>
 </div>

@@ -1,0 +1,25 @@
+﻿@model Storm.InterviewTest.Hearthstone.Core.Features.Cards.Domain.RarityTypeOptions
+@using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Domain
+
+@{ 
+    var colour = "";
+
+    if (Model == RarityTypeOptions.Common)
+    {
+        colour = "slategray";
+    } else if (Model == RarityTypeOptions.Epic)
+    {
+        colour = "blueviolet";
+    } else if (Model == RarityTypeOptions.Free)
+    {
+        colour = "silver";
+    } else if (Model == RarityTypeOptions.Legendary)
+    {
+        colour = "coral";
+    } else if (Model == RarityTypeOptions.Rare)
+    {
+        colour = "blue";
+    }
+}
+
+<p><strong style="color: @colour;"><abbr title="@Model Card">@Model</abbr></strong></p>

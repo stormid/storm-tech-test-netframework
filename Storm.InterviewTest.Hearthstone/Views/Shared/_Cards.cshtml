@@ -1,0 +1,11 @@
+﻿@using Storm.InterviewTest.Hearthstone.Core.Features.Cards.Models
+@model IEnumerable<CardModel>
+
+<ul class="list-inline">
+    @foreach (var card in Model)
+    {
+        <li class="list-group-item">
+            @{ Html.RenderPartial("_card", card); }
+        </li>
+    }
+</ul>
